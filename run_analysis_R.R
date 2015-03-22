@@ -13,7 +13,9 @@
 ##  From the data set in step 4, creates a second, independent tidy data set 
 ##  with the average of each variable for each activity and each subject.
 
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")
+##  Set working directory for my computer
+##  setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")
+
 ##  Source: ( https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip)
 ##  Files downloaded from link and stored unzipped in Data_Cleaning_3 folder.
 
@@ -21,34 +23,27 @@ setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3"
 ## Obtain Train and Test Datasets from UCI HAR Dataset
 
 # Load in Feature Set Names for Dataset
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset")
+dir=getwd()   #  Load Current dirctory for global use
+setwd(paste0(dir,"/UCI HAR Dataset"))
 features=read.table("features.txt")
 
 # Load Test Tables and Check Data
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/test")
-ytest=read.table("y_test.txt")
-xtest=read.table("x_test.txt")
-testsub=read.table("subject_test.txt",)
+setwd(paste0(dir,"/UCI HAR Dataset/test"))
+ytest=read.table("y_test.txt", col.names="activity")
+xtest=read.table("x_test.txt",col.names = features[,2])
+testsub=read.table("subject_test.txt",col.names="subject")
 ##str(ytest)
 ##str(xtest)
 ##str(testsub)
 
 # Load Train Tables and check data
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/train")
-ytrain=read.table("y_train.txt")
-xtrain=read.table("x_train.txt")
-trainsub=read.table("subject_train.txt")
+setwd(paste0(dir,"/UCI HAR Dataset/train"))
+ytrain=read.table("y_train.txt",col.names="activity")
+xtrain=read.table("x_train.txt",col.names = features[,2])
+trainsub=read.table("subject_train.txt",col.names="subject")
 ##  str(ytrain)
 ##  str(xtrain)
 ##  str(trainsub)
-
-##  Add column names for GitHub version
-"y_train.txt"col.names="activity"
-"x_train.txt"col.names = features[,2]
-"subject_train.txt"col.names="subject"
-"y_train.txt"col.names="activity"
-"x_train.txt"col.names = features[,2]
-"subject_train.txt"col.names="subject"
 
 ##  Merge Test and Train Datasets
 ##  Combine xtest/ytest/subject_test with an added column to ID test or train data
@@ -115,6 +110,6 @@ tidydb$activity=as.factor(tidydb$activity)
 
 ###  Write file as .TXT for upload to GIThub
 
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")
+setwd(dir)
 write.table(tidydb, "tidydb.txt",row.name=FALSE)
 

@@ -9,6 +9,7 @@ Code is located in "run_analysis_R.R" file
 The data set for this assignment was downloaded from:
 https://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip  
 Files were stored in a programming folder for use with this course.  
+My working directory is below and is set on a Data_Cleaning_3 folder that contains the UCI HAR Datase
 setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")  
 
 #### The data set had a one main folder **UCI HAR Dataset** with two subfolders containing train and test data sets
@@ -46,30 +47,32 @@ setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3"
   *traindb <7252X564> dataframe merging testx/testy/testsub/subset(adds column of "train")     
   *totaldb <10299x564> dataframe merging testdb and traindb  
   *meanSTDdb <10299X88> dataframe subset of totaldb containing mean and std calculations  
-  *subACT <variable dimensions>  Loop dataframe to subset totaldb based on subject and activity  
-  *tidydb <180X88> dataframe containing final tidy data mearging meanSTDdb with subject# and activity
-  
+  *subACT <variable dimensions>  Loop dataframe to subset totaldb based on subject and activity    
+  tidydb <180X88> dataframe containing final tidy data mearging meanSTDdb with subject# and activity 
+    
 #####2.**Values**
+  *dir Holds working directory    
   *activity <1:6> Holds cleaned activity names to substitute for activity numbers in data sets     
   *activityWords <1:10299> Holds activity words to substitute for activity numbers in merged data set     
   *featuresC <1:88> Holds feature names containg means or std calculations  
   *namesdb <1:564>  Holds feature names    
   *rowID  <1:180> Loop variable that counts total subject observations    
   *subset < Variabe that containg either "test" or "train" to add to the testdb or traindb, respectively.>    
-  *i  <1:30> loop variable that counts subjects  
-  *j  <1:6> Loop variable that counts activites  
-  
+  *i  <1:30> loop variable that counts subjects     
+  j  <1:6> Loop variable that counts activites  
+    
 #### Code
 
 **# Load in Feature Set Names for Dataset**
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset")
+dir=getwd()   #  Load Current dirctory for global use  
+setwd(paste0(dir,"/UCI HAR Dataset"))    ## Sets directory to UCI HAR Dataset  
 features=read.table("features.txt")
 ```
 **# Load Test Tables and Check Data**
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/test")
-ytest=read.table("y_test.txt", col.names="activity")
+setwd(paste0(dir,"/UCI HAR Dataset/test")) 
+ytest=read.table("y_test.txt", col.names="activity")  
 xtest=read.table("x_test.txt",col.names = features[,2])
 testsub=read.table("subject_test.txt",col.names="subject")
 ```
@@ -81,7 +84,7 @@ str(testsub)
 ```
 **# Load Train Tables and check data**
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/train")
+setwd(paste0(dir,"/UCI HAR Dataset/train"))  
 ytrain=read.table("y_train.txt",col.names="activity")
 xtrain=read.table("x_train.txt",col.names = features[,2])
 trainsub=read.table("subject_train.txt",col.names="subject")
@@ -161,7 +164,7 @@ sum(is.na(tidydb))
 ```
 **# Write file as .TXT for upload to GitHub**
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")
+setwd(dir)
 write.table(tidydb, "tidydb.txt",row.name=FALSE)
 ```
  

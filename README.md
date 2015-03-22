@@ -41,12 +41,13 @@ Obtain Train and Test Datasets from UCI HAR Dataset
 
 ####1. Loaded in Feature Set Names for Dataset
 ```
-setwd("~/Documents/MagicBriefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset")  
+dir=getwd()   #  Load Current dirctory for global use
+setwd(paste0(dir,"/UCI HAR Dataset"))    ## Sets directory to UCI HAR Dataset 
 features=read.table("features.txt")
 ```
 ####2. Loaded Test Tables and Checked for Data Integrity
 ```
-setwd("~/Documents/MagicBriefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/test")  
+setwd(paste0(dir,"/UCI HAR Dataset/test"))  
 ytest=read.table("y_test.txt", col.names="activity")  
 xtest=read.table("x_test.txt",col.names = features[,2])  
 testsub=read.table("subject_test.txt",col.names="subject")  
@@ -56,7 +57,7 @@ str(testsub)
 ```
 ####3. Loaded in Train Tables and Checked Data Integrity
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3/UCI HAR Dataset/train")
+setwd(paste0(dir,"/UCI HAR Dataset/train"))
 ytrain=read.table("y_train.txt",col.names="activity")   # Added column names  
 xtrain=read.table("x_train.txt",col.names = features[,2]) # Added column names  
 trainsub=read.table("subject_train.txt",col.names="subject") # Added col names  
@@ -129,7 +130,7 @@ sum(is.na(tidydb))
 ```
 ####13. Write file as .TXT for Upload to GitHub
 ```
-setwd("~/Documents/Magic Briefcase/Computer/Data_science_Track1/Data_Cleaning_3")  
+setwd(dir)
 write.table(tidydb, "tidydb.txt",row.name=FALSE)  
 ```
 ####14. References
